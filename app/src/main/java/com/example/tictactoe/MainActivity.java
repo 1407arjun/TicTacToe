@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     public void coins(View view){
         ImageView coin = (ImageView) view;
         TextView message = findViewById(R.id.display);
-        Button change = findViewById(R.id.Button);
         TextView score = findViewById(R.id.scoreboard);
+        Button change = findViewById(R.id.Button);
         Button click = findViewById(R.id.resetsc);
 
         int tapCoin = Integer.parseInt(coin.getTag().toString());
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     change.setText("Play Again");
                     score.setText(score_O + " - " + score_X);
-                    if (score.getText().toString() != "0 - 0"){
+                    if (!score.getText().toString().equals("0 - 0")){
                         click.setEnabled(true);
                     }
                 }
@@ -104,10 +104,12 @@ public class MainActivity extends AppCompatActivity {
         Arrays.fill(state, 2);
         players[0] = loser;
         players[1] = winner;
+        TextView score = findViewById(R.id.scoreboard);
+        score.setText(score_O + " - " + score_X);
+        Button click = findViewById(R.id.resetsc);
         Button change = findViewById(R.id.Button);
         change.setText("Reset");
-        Button click = findViewById(R.id.resetsc);
-        click.setEnabled(false);
+        click.setEnabled(!score.getText().toString().equals("0 - 0"));
         GridLayout gridLayout = findViewById(R.id.grid);
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             ((ImageView) gridLayout.getChildAt(i)).setImageResource(0);
@@ -118,6 +120,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void resetscore(View view){
+        TextView message = findViewById(R.id.display);
+        TextView score = findViewById(R.id.scoreboard);
+        Button change = findViewById(R.id.Button);
+        Button click = findViewById(R.id.resetsc);
         gameActive = true;
         activePlayer = 0;
         Arrays.fill(state, 2);
@@ -125,17 +131,13 @@ public class MainActivity extends AppCompatActivity {
         players[1] = winner;
         score_O = 0;
         score_X = 0;
-        TextView score = findViewById(R.id.scoreboard);
         score.setText(score_O + " - " + score_X);
-        Button click = findViewById(R.id.resetsc);
         click.setEnabled(false);
-        Button change = findViewById(R.id.Button);
         change.setText("Reset");
         GridLayout gridLayout = findViewById(R.id.grid);
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             ((ImageView) gridLayout.getChildAt(i)).setImageResource(0);
         }
-        TextView message = findViewById(R.id.display);
         message.setText(loser + " starts");
 
     }
