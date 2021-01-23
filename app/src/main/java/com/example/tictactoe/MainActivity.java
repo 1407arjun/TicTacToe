@@ -109,7 +109,11 @@ public class MainActivity extends AppCompatActivity {
         Button click = findViewById(R.id.resetsc);
         Button change = findViewById(R.id.Button);
         change.setText("Reset");
-        click.setEnabled(!score.getText().toString().equals("0 - 0"));
+        if (score.getText().toString().equals("0 - 0")){
+            click.setEnabled(false);
+        }else{
+            click.setEnabled(true);
+        }
         GridLayout gridLayout = findViewById(R.id.grid);
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             ((ImageView) gridLayout.getChildAt(i)).setImageResource(0);
