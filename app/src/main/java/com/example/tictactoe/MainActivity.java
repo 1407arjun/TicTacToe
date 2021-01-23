@@ -6,8 +6,8 @@ import androidx.gridlayout.widget.GridLayout;
 import android.os.Bundle;
 import android.view.View;
 
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.Arrays;
@@ -21,10 +21,15 @@ public class MainActivity extends AppCompatActivity {
     String loser = players[0];
     boolean gameActive = true;
     int[][] winCase = {{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
+    int score_O = 0;
+    int score_X = 0;
 
     public void coins(View view){
         ImageView coin = (ImageView) view;
         TextView message = findViewById(R.id.display);
+        Button change = findViewById(R.id.Button);
+        TextView score = findViewById(R.id.scoreboard);
+        Button click = findViewById(R.id.resetsc);
 
         int tapCoin = Integer.parseInt(coin.getTag().toString());
 
@@ -63,6 +68,16 @@ public class MainActivity extends AppCompatActivity {
                         winner = players[1];
                         loser = players[0];
                     }
+                    if (winner == "X"){
+                        score_X++;
+                    }else{
+                        score_O++;
+                    }
+                    change.setText("Play Again");
+                    score.setText(score_O + " - " + score_X);
+                    if (score.getText().toString() != "0 - 0"){
+                        click.setEnabled(true);
+                    }
                 }
                 else{
                     boolean gameOver = true;
@@ -74,8 +89,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (gameOver) {
                         message.setText("It's a draw");
-                        winner = players[1];
-                        loser = players[0];
+                        winner = players[0];
+                        loser = players[1];
+                        change.setText("Play Again");
                     }
                 }
             }
@@ -88,6 +104,33 @@ public class MainActivity extends AppCompatActivity {
         Arrays.fill(state, 2);
         players[0] = loser;
         players[1] = winner;
+        Button change = findViewById(R.id.Button);
+        change.setText("Reset");
+        Button click = findViewById(R.id.resetsc);
+        click.setEnabled(false);
+        GridLayout gridLayout = findViewById(R.id.grid);
+        for (int i = 0; i < gridLayout.getChildCount(); i++) {
+            ((ImageView) gridLayout.getChildAt(i)).setImageResource(0);
+        }
+        TextView message = findViewById(R.id.display);
+        message.setText(loser + " starts");
+
+    }
+
+    public void resetscore(View view){
+        gameActive = true;
+        activePlayer = 0;
+        Arrays.fill(state, 2);
+        players[0] = loser;
+        players[1] = winner;
+        score_O = 0;
+        score_X = 0;
+        TextView score = findViewById(R.id.scoreboard);
+        score.setText(score_O + " - " + score_X);
+        Button click = findViewById(R.id.resetsc);
+        click.setEnabled(false);
+        Button change = findViewById(R.id.Button);
+        change.setText("Reset");
         GridLayout gridLayout = findViewById(R.id.grid);
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             ((ImageView) gridLayout.getChildAt(i)).setImageResource(0);
@@ -104,5 +147,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         TextView message = findViewById(R.id.display);
         message.setText("O starts");
+        TextView score = findViewById(R.id.scoreboard);
+        score.setText(score_O + " - " + score_X);
+        Button click = findViewById(R.id.resetsc);
+        click.setEnabled(false);
     }
 }
