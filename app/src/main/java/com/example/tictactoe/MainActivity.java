@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         ImageView coin = (ImageView) view;
         TextView message = findViewById(R.id.display);
         TextView score = findViewById(R.id.scoreboard);
-        Button change = findViewById(R.id.Button);
         Button click = findViewById(R.id.resetsc);
+        Button change = findViewById(R.id.Button);
 
         int tapCoin = Integer.parseInt(coin.getTag().toString());
 
@@ -99,26 +99,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void reset(View view){
+        TextView message = findViewById(R.id.display);
+        TextView score = findViewById(R.id.scoreboard);
+        Button click = findViewById(R.id.resetsc);
+        Button change = findViewById(R.id.Button);
         gameActive = true;
         activePlayer = 0;
         Arrays.fill(state, 2);
         players[0] = loser;
         players[1] = winner;
-        TextView score = findViewById(R.id.scoreboard);
         score.setText(score_O + " - " + score_X);
-        Button click = findViewById(R.id.resetsc);
-        Button change = findViewById(R.id.Button);
         change.setText("Reset");
-        if (score.getText().toString().equals("0 - 0")){
-            click.setEnabled(false);
-        }else{
-            click.setEnabled(true);
-        }
+        click.setEnabled(!score.getText().toString().equals("0 - 0"));
         GridLayout gridLayout = findViewById(R.id.grid);
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             ((ImageView) gridLayout.getChildAt(i)).setImageResource(0);
         }
-        TextView message = findViewById(R.id.display);
         message.setText(loser + " starts");
 
     }
@@ -152,10 +148,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView message = findViewById(R.id.display);
-        message.setText("O starts");
         TextView score = findViewById(R.id.scoreboard);
-        score.setText(score_O + " - " + score_X);
         Button click = findViewById(R.id.resetsc);
+        message.setText("O starts");
+        score.setText(score_O + " - " + score_X);
         click.setEnabled(false);
     }
 }
