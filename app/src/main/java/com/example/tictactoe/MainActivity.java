@@ -122,8 +122,8 @@ public class MainActivity extends AppCompatActivity {
     public void resetscore(View view){
         TextView message = findViewById(R.id.display);
         TextView score = findViewById(R.id.scoreboard);
-        Button change = findViewById(R.id.Button);
         Button click = findViewById(R.id.resetsc);
+        Button change = findViewById(R.id.Button);
         gameActive = true;
         activePlayer = 0;
         Arrays.fill(state, 2);
